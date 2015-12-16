@@ -25,8 +25,7 @@ def graph_normal(mean, variance):
 	ys = [get_y(x, mean, variance, sigma) for x in xs]
 	plt.plot(xs, ys)
 	plt.vlines(0, ymin=0, ymax=max(ys))
-	plt.xlabel("Z Values")
-	plt.title("Normal Distribution")
+	plt.xlabel("Mean Values")
 	return fig, xs, ys
 
 def fill_graph(fig, xs, ys, Z, outside=False, inside=False):
@@ -42,7 +41,7 @@ def fill_graph(fig, xs, ys, Z, outside=False, inside=False):
 		area = trapz(ys[-idx:idx], dx=0.0001)
 	proportion = round(area / trapz(ys, dx=0.0001), 2)
 	patch = Rectangle((0,0), 1, 1, facecolor="blue")
-	plt.legend([patch], ["Proportion of {}".format(proportion)])
+	plt.legend([patch], ["Rejection Region \n at Likelihood of {}".format(proportion)])
 	return fig
 
 def add_gaussian(fig, alternate_mean, variance):
@@ -58,4 +57,4 @@ def add_gaussian(fig, alternate_mean, variance):
 fig, xs, ys = graph_normal(mean, variance)
 fig = fill_graph(fig, xs, ys, Z, outside=True)
 #fig = add_gaussian(fig, alternate_mean, variance)
-fig.savefig("Gaussian.png")
+fig.savefig("Graphs/Gaussian.png")
