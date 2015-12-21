@@ -9,7 +9,7 @@ mean = 0
 variance = 1
 sigma = sqrt(variance)
 Z = 1.28
-alternate_mean = 3
+alternate_mean = 5
 
 # formula for Gaussian distribution, proof of God
 def get_y(x, mean, variance, sigma):
@@ -26,6 +26,7 @@ def graph_normal(mean, variance):
 	plt.plot(xs, ys)
 	plt.vlines(0, ymin=0, ymax=max(ys))
 	plt.xlabel("Mean Values")
+	plt.title("Standard Gaussian")
 	return fig, xs, ys
 
 def fill_graph(fig, xs, ys, Z, outside=False, inside=False):
@@ -41,7 +42,7 @@ def fill_graph(fig, xs, ys, Z, outside=False, inside=False):
 		area = trapz(ys[-idx:idx], dx=0.0001)
 	proportion = round(area / trapz(ys, dx=0.0001), 2)
 	patch = Rectangle((0,0), 1, 1, facecolor="blue")
-	plt.legend([patch], ["Rejection Region \n at Likelihood of {}".format(proportion)])
+	plt.legend([patch], ["Area under the curve {}".format(proportion)])
 	return fig
 
 def add_gaussian(fig, alternate_mean, variance):
@@ -55,6 +56,6 @@ def add_gaussian(fig, alternate_mean, variance):
 	return fig
 
 fig, xs, ys = graph_normal(mean, variance)
-fig = fill_graph(fig, xs, ys, Z, outside=True)
-#fig = add_gaussian(fig, alternate_mean, variance)
-fig.savefig("Graphs/Gaussian.png")
+fig = add_gaussian(fig, alternate_mean, variance)
+fig = fill_graph(fig, xs, ys, Z, inside=True)
+#fig.savefig("Graphs/Shaded_Inside.png")
